@@ -60,21 +60,33 @@
 
         function searchGoogle(params) {
             console.log(params)
-            const url = "https://www.googleapis.com/customsearch/v1?key=" + "AIzaSyCgSORGR8_Xg9Yl5NcmvrdEU8o9TNun2D0" + "&q=" + params+"&cx="+"016241636679507732363:p7vs8rbtlms"
+            const url = "https://www.googleapis.com/customsearch/v1?key=" + "AIzaSyCgSORGR8_Xg9Yl5NcmvrdEU8o9TNun2D0" + "&q=" + params + "&cx=" + "016241636679507732363:p7vs8rbtlms"
             fetch(url)
                 .then(response => response.json())
                 .then(data => searchResponse(data));
         }
         function searchResponse(response) {
-            console.log(response)
-            for (var i = 0; i < response.items.length; i++) {
-                var item = response.items[i];
-                // in production code, item.htmlTitle should have the HTML entities escaped.
-                document.getElementById("content").innerHTML += "<br>" + item.htmlTitle;
-            }
+            // for (var i = 0; i < response.items.length; i++) {
+            //     var item = response.items[i];
+            //     // in production code, item.htmlTitle should have the HTML entities escaped.
+            //     document.getElementById("content").innerHTML += "<br>" + item.htmlTitle;
+            // }
+            let searchLink = response.items[0].link;
+            fetch(searchLink, {
+                method: 'GET',
+                mode: 'no-cors'
+                
+            })
+                .then(response => response.text())
+                .then(response => { 
+                    console.log(response)
+                    html = $(response).html(); 
+                    console.log(html); 
+                })
 
         }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-----HTML------>
     <div class="speech">
         <input type="text" name="s" id="transcript" placeholder="Speak" />
