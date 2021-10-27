@@ -75,46 +75,46 @@
             fetch(searchLink, {
                 method: 'GET',
                 mode: 'no-cors'
-                
+
             })
                 .then(response => response.text())
-                .then(response => { 
+                .then(response => {
                     console.log(response)
-                    html = $(response).html(); 
-                    console.log(html); 
+                    html = $(response).html();
+                    console.log(html);
                     postText(html)
                 })
 
         }
 
-        function postText(data){
+        function postText(data) {
             let accessToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlFVUTRNemhDUVVWQk1rTkJNemszUTBNMlFVVTRRekkyUmpWQ056VTJRelUxUTBVeE5EZzFNUSJ9.eyJodHRwczovL3BsYXRmb3JtLnN5bWJsLmFpL3VzZXJJZCI6IjQ2ODcxMTkwNDI3NDAyMjQiLCJpc3MiOiJodHRwczovL2RpcmVjdC1wbGF0Zm9ybS5hdXRoMC5jb20vIiwic3ViIjoiU29SMVJhSUhwTk1RS3pwZWlEZFhaOXdxclB4QkVDZnhAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vcGxhdGZvcm0ucmFtbWVyLmFpIiwiaWF0IjoxNjM1MzQ1MDU2LCJleHAiOjE2MzU0MzE0NTYsImF6cCI6IlNvUjFSYUlIcE5NUUt6cGVpRGRYWjl3cXJQeEJFQ2Z4IiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.wywpiNHptcHIGSPOX9DkqUgQgYmIeGYVYc89hvBNdyJJWigQkVroWoekfkIQ7EdqTtO6-t7i-Hzk4ZXbkbqrR9_ikpuNDINVsbfLXvoWf9p_J6dJWMCPp7gwSKZIQxoCV9_-uGrQtgX0LcIgGLWbeZ9kdXQHGtR9NwXfPoLHbdI9WVkIl9bN5i-eNepBdFsGSpDrFZ3dMORLsU-Ssr5ATPNruuho0C-ZbeQszXIrqIDeEV6rqD1cW4WohtSCFTaTz4t9G3OQp2PHz6C9lhRfZq2cp-Ryf2pGr1az7cNe_EZlkG5bHLjhgm9ijirzCWWmUcvxIEkVlktczKYa9rK97Q";
-            postData={
+            postData = {
                 "messages": [
                     {
-                    "payload": {
-                        "content": data,
-                        "contentType": "text/plain"
-                    },
-                    "from": {
-                        "name": "John",
-                        "userId": "john@example.com"
-                    }
+                        "payload": {
+                            "content": data,
+                            "contentType": "text/plain"
+                        },
+                        "from": {
+                            "name": "John",
+                            "userId": "john@example.com"
+                        }
                     }
                 ]
-                }
+            }
             $.post(
                 "https://api.symbl.ai/v1/process/text",
                 data,
-                (response)=>{
+                (response) => {
                     let convID = response.json().conversationID;
                     $.get(`https://api-labs.symbl.ai/v1/conversations/${convID}/summary`,
-                    (response)=>{
-                        console.log(response.json())
-                    }
+                        (response) => {
+                            console.log(response.json())
+                        }
                     )
                 },
-                (error)=>{
+                (error) => {
 
                 }
             )
